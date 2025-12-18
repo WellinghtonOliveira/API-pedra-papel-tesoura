@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pedra, Papel e Tesoura</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>🪨📄✂️ Pedra, Papel e Tesoura</h1>
+
+  <div id="match">
+    <button id="createMatch">Criar Partida</button>
+    <p id="matchId"></p>
+  </div>
+
+  <div id="play" style="display:none;">
+    <h2>Escolha sua jogada</h2>
+    <button onclick="play('pedra')">Pedra</button>
+    <button onclick="play('papel')">Papel</button>
+    <button onclick="play('tesoura')">Tesoura</button>
+  </div>
+
+  <div id="result"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
