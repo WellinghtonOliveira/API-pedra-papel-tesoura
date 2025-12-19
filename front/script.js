@@ -37,7 +37,7 @@ function pollResult() {
         const res = await fetch(`${API_URL}/match/result?matchId=${matchId}`)
         const data = await res.json()
 
-        if (data.status === "waiting") return
+        if (data.status === "waiting") return console.log(data.status)
 
         clearInterval(interval)
 
