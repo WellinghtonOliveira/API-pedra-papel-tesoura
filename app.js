@@ -15,8 +15,8 @@ function vencedor(pUm, pDois) {
     (pUm === "pedra" && pDois === "tesoura") ||
     (pUm === "papel" && pDois === "pedra") ||
     (pUm === "tesoura" && pDois === "papel")
-  ) return "player - 1"
-  return "player - 2"
+  ) return "Jogador - 1"
+  return "jogador - 2"
 }
 
 app.post("/match/create", (req, res) => {
@@ -36,9 +36,9 @@ app.post("/match/play", (req, res) => {
   const { matchId, choice } = req.body
   const match = matches.get(matchId)
 
-  if (!match) return res.status(404).json({ error: "partida nao existe" })
-  if (match.finalizada) return res.json({ status: "finalizada" })
-  if (match.primeiroJogador) return res.json({ status: "ja jogou" })
+  if (!match) return res.status(404).json({ error: "Partida nao existe" })
+  if (match.finalizada) return res.json({ status: "Finalizada" })
+  if (match.segundoJogador) return res.json({ status: "Partida finalizada" })
 
   if (match.primeiroJogador == null) {
     match.primeiroJogador = choice
