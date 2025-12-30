@@ -49,7 +49,6 @@ function pollResult() {
       <p>Jogador 1: ${data.playerUm}</p>
       <p>Jogador 2: ${data.playerDois}</p>
       <br>
-      <strong>Vencedor: ${data.vencedor}</strong>
-    `
+      <strong>Vencedor: ${data.vencedor}</strong>`
     }, 2000)
 }
