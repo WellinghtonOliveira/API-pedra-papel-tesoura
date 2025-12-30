@@ -28,7 +28,8 @@ app.post("/match/create", (req, res) => {
     primeiroJogador: null,
     segundoJogador: null,
     finalizada: false,
-    resultado: null
+    resultado: null,
+    reset: null,
   })
 
   res.json({ matchId })
@@ -45,7 +46,7 @@ app.post("/match/play", (req, res) => {
 
   if (match.primeiroJogador == null) {
     match.primeiroJogador = choice
-  }else {
+  } else {
     match.segundoJogador = choice
   }
 
@@ -66,7 +67,7 @@ app.post("/match/play", (req, res) => {
 app.get("/match/result", (req, res) => {
   const { matchId } = req.query
   const match = matches.get(matchId)
-  const resultado = match.resultado
+  let resultado
 
   if (!match) return res.status(404).json({ error: "partida nao existe" })
 
@@ -74,8 +75,12 @@ app.get("/match/result", (req, res) => {
     return res.json({ status: "waiting" })
   }
 
-  match.resultado = {}
-  res.json(resultado)
+  if (match.reset != null) {
+    resultado = match.resultado
+    match = {}
+  }
+  
+  res.json(!resultado ? match.resultado : resultado)
 })
 
 app.listen(PORT, () => {
