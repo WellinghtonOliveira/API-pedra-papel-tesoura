@@ -42,9 +42,13 @@ function pollResult() {
         clearInterval(interval)
 
         document.getElementById("result").innerHTML = `
+      <br>
+      <br>
+      <br>
       <h2>Resultado</h2>
-      <p>Jogador 1: ${data.jogador1}</p>
-      <p>Jogador 2: ${data.jogador2}</p>
+      <p>Jogador 1: ${data.playerUm}</p>
+      <p>Jogador 2: ${data.playerDois}</p>
+      <br>
       <strong>Vencedor: ${data.vencedor}</strong>
     `
     }, 2000)
