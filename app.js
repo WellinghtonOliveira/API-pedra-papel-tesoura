@@ -9,6 +9,7 @@ app.use(express.static("./front"))
 
 const matches = new Map()
 
+// Função para verificar o ganhador
 function vencedor(pUm, pDois) {
   if (pUm === pDois) return "empate"
   if (
@@ -19,6 +20,7 @@ function vencedor(pUm, pDois) {
   return "jogador - 2"
 }
 
+// Rota para criar a partida
 app.post("/match/create", (req, res) => {
   const matchId = nanoid()
 
@@ -32,6 +34,7 @@ app.post("/match/create", (req, res) => {
   res.json({ matchId })
 })
 
+// Rota para fazer a jogada
 app.post("/match/play", (req, res) => {
   const { matchId, choice } = req.body
   const match = matches.get(matchId)
@@ -46,14 +49,12 @@ app.post("/match/play", (req, res) => {
     match.segundoJogador = choice
   }
 
-  // const escolhas = ["pedra", "papel", "tesoura"]
-  // match.bot = escolhas[Math.floor(Math.random() * escolhas.length)]
-
   if (match.segundoJogador != null) {
     match.resultado = {
       playerUm: match.primeiroJogador,
       playerDois: match.segundoJogador,
-      vencedor: vencedor(match.primeiroJogador, match.segundoJogador)
+      vencedor: vencedor(match.primeiroJogador, match.segundoJogador),
+      reset: true
     }
     match.finalizada = true
   }
@@ -61,9 +62,11 @@ app.post("/match/play", (req, res) => {
   res.json({ status: "ok" })
 })
 
+// Rota para verificar os resultados
 app.get("/match/result", (req, res) => {
   const { matchId } = req.query
   const match = matches.get(matchId)
+  const resultado = match.resultado
 
   if (!match) return res.status(404).json({ error: "partida nao existe" })
 
@@ -71,7 +74,8 @@ app.get("/match/result", (req, res) => {
     return res.json({ status: "waiting" })
   }
 
-  res.json(match.resultado)
+  match.resultado = {}
+  res.json(resultado)
 })
 
 app.listen(PORT, () => {
