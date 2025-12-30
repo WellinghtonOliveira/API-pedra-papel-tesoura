@@ -9,22 +9,22 @@ app.use(express.static("./front"))
 
 const matches = new Map()
 
-function vencedor(player, bot) {
-  if (player === bot) return "empate"
+function vencedor(pUm, pDois) {
+  if (pUm === pDois) return "empate"
   if (
-    (player === "pedra" && bot === "tesoura") ||
-    (player === "papel" && bot === "pedra") ||
-    (player === "tesoura" && bot === "papel")
-  ) return "player"
-  return "bot"
+    (pUm === "pedra" && pDois === "tesoura") ||
+    (pUm === "papel" && pDois === "pedra") ||
+    (pUm === "tesoura" && pDois === "papel")
+  ) return "player - 1"
+  return "player - 2"
 }
 
 app.post("/match/create", (req, res) => {
   const matchId = nanoid()
 
   matches.set(matchId, {
-    jogador: null,
-    bot: null,
+    primeiroJogador: null,
+    segundoJogador: null,
     finalizada: false,
     resultado: null
   })
@@ -38,20 +38,25 @@ app.post("/match/play", (req, res) => {
 
   if (!match) return res.status(404).json({ error: "partida nao existe" })
   if (match.finalizada) return res.json({ status: "finalizada" })
-  if (match.jogador) return res.json({ status: "ja jogou" })
+  if (match.primeiroJogador) return res.json({ status: "ja jogou" })
 
-  match.jogador = choice
-
-  const escolhas = ["pedra", "papel", "tesoura"]
-  match.bot = escolhas[Math.floor(Math.random() * escolhas.length)]
-
-  match.resultado = {
-    player: match.jogador,
-    bot: match.bot,
-    vencedor: vencedor(match.jogador, match.bot)
+  if (match.primeiroJogador == null) {
+    match.primeiroJogador = choice
+  }else {
+    match.segundoJogador = choice
   }
 
-  match.finalizada = true
+  // const escolhas = ["pedra", "papel", "tesoura"]
+  // match.bot = escolhas[Math.floor(Math.random() * escolhas.length)]
+
+  if (match.segundoJogador != null) {
+    match.resultado = {
+      playerUm: match.primeiroJogador,
+      playerDois: match.segundoJogador,
+      vencedor: vencedor(match.primeiroJogador, match.segundoJogador)
+    }
+    match.finalizada = true
+  }
 
   res.json({ status: "ok" })
 })
