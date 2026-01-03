@@ -38,10 +38,10 @@ function pollResult() {
         const data = await res.json()
 
         if (data.status === "waiting") return console.log(data.status)
+ 
+        clearInterval(interval) 
 
-        clearInterval(interval)
-
-        document.getElementById("result").innerHTML = `
+        document.getElementById("result").innerHTML = ` 
       <br>
       <br>
       <br>
