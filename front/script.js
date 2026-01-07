@@ -27,11 +27,11 @@ async function play(choice) {
             playerId, 
             choice
         })
-    })
+    }) 
 
     pollResult()
 }
-
+ 
 function pollResult() {
     const interval = setInterval(async () => {
         const res = await fetch(`${API_URL}/match/result?matchId=${matchId}`)
