@@ -24,7 +24,7 @@ async function play(choice) {
         },
         body: JSON.stringify({
             matchId,
-            playerId,
+            playerId, 
             choice
         })
     })
