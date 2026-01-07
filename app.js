@@ -54,7 +54,7 @@ app.post("/match/play", (req, res) => {
     match.resultado = {
       playerUm: match.primeiroJogador,
       playerDois: match.segundoJogador,
-      vencedor: vencedor(match.primeiroJogador, match.segundoJogador),
+      vencedor: vencedor(match.primeiroJogador, match.segundoJogador), 
       reset: true 
     }
     match.finalizada = true
